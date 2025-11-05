@@ -13,7 +13,7 @@
    * Self report from maintainer of the tools
    * ~~Reading of Source code for the tools~~
    * Scrape and aggregate data from existing Indexes
- * Combine these parameters too make mark them with a common scoring pattern (AI score, Importance Score, Implementation difficulty score) 
+ * Combine these parameters to mark them with a common scoring pattern (AI score, Importance Score, Implementation difficulty score) 
  * Make a summary on how AI is actually used in each tool and how it helps protect infrastructure
  * Display these options for users too select
 
