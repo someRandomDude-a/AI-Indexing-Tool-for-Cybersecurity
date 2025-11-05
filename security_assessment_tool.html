@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise Security Assessment Tool</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Enterprise Security Assessment Tool with AI Scoring</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <h1>Enterprise Security Assessment Tool</h1>
-            <p>Comprehensive security maturity assessment across 15 organizational factors based on L0-L4 threat
-                detection framework</p>
+            <h1>Enterprise Security Assessment Tool with AI Scoring</h1>
+            <p>Comprehensive security maturity assessment across 15 organizational factors plus AI adoption evaluation
+                based on L0-L4 framework</p>
             <button id="darkModeToggle" class="btn btn-secondary" style="position: absolute; top: 20px; right: 20px;"
                 onclick="toggleDarkMode()">
                 🌙 Dark Mode
@@ -28,6 +28,7 @@
             <button class="nav-tab active" onclick="showTab('company')">Company Info</button>
             <button class="nav-tab" onclick="showTab('tools')">Security Tools</button>
             <button class="nav-tab" onclick="showTab('assessment')">Assessment</button>
+            <button class="nav-tab" onclick="showTab('ai-assessment')">AI Assessment</button>
             <button class="nav-tab" onclick="showTab('results')">Results</button>
         </div>
 
@@ -638,116 +639,395 @@
 
             <!-- TPRM -->
             <div class="form-group">
-                <label>Third-Party Vendor Risk Management (TPRM) (1-10 scale)
-            </div>
-            <div class="slider-container">
-                <input type="range" class="slider" id="tprm" min="1" max="10" value="5"
-                    oninput="updateSliderValue('tprm', 'tprmValue')">
-                <div>Current TPRM maturity: <span class="score-value" id="tprmValue">5</span></div>
-            </div>
-            <div class="tool-description">
-                Governance and operational discipline for managing supplier cybersecurity risk across the lifecycle.
-            </div>
-        </div>
-
-        <!-- Security Awareness Culture -->
-        <div class="form-group">
-            <label>Security Awareness Culture Level (1-10 scale)</label>
-            <div class="slider-container">
-                <input type="range" class="slider" id="securityCulture" min="1" max="10" value="5"
-                    oninput="updateSliderValue('securityCulture', 'securityCultureValue')">
-                <div>Current culture level: <span class="score-value" id="securityCultureValue">5</span></div>
-            </div>
-            <div class="tool-description">
-                Degree to which shared beliefs, routines, symbols, and power structures reinforce secure behavior.
-            </div>
-        </div>
-
-        <!-- Company Policy Approachability -->
-        <div class="form-group">
-            <label>Company Policy Approachability & Accessibility (1-10 scale)</label>
-            <div class="slider-container">
-                <input type="range" class="slider" id="policyApproachability" min="1" max="10" value="5"
-                    oninput="updateSliderValue('policyApproachability', 'policyApproachabilityValue')">
-                <div>Current approachability: <span class="score-value" id="policyApproachabilityValue">5</span></div>
-            </div>
-            <div class="tool-description">
-                How easy is it for employees to access, understand, and follow company security policies and procedures.
-            </div>
-        </div>
-
-        <!-- Communication Atmosphere -->
-        <div class="form-group">
-            <label>Communication Atmosphere & Transparency (1-10 scale)</label>
-            <div class="slider-container">
-                <input type="range" class="slider" id="communicationAtmosphere" min="1" max="10" value="5"
-                    oninput="updateSliderValue('communicationAtmosphere', 'communicationAtmosphereValue')">
-                <div>Current atmosphere: <span class="score-value" id="communicationAtmosphereValue">5</span></div>
-            </div>
-            <div class="tool-description">
-                Level of open communication, transparency about security incidents, and psychological safety for
-                reporting issues.
-            </div>
-        </div>
-
-        <!-- Cross-Department Collaboration -->
-        <div class="form-group">
-            <label>Cross-Department Security Collaboration (1-10 scale)</label>
-            <div class="slider-container">
-                <input type="range" class="slider" id="crossDepartmentCollaboration" min="1" max="10" value="5"
-                    oninput="updateSliderValue('crossDepartmentCollaboration', 'crossDepartmentCollaborationValue')">
-                <div>Current collaboration: <span class="score-value" id="crossDepartmentCollaborationValue">5</span>
+                <label>Third-Party Vendor Risk Management (TPRM) (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="tprm" min="1" max="10" value="5"
+                        oninput="updateSliderValue('tprm', 'tprmValue')">
+                    <div>Current TPRM maturity: <span class="score-value" id="tprmValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Governance and operational discipline for managing supplier cybersecurity risk across the lifecycle.
                 </div>
             </div>
-            <div class="tool-description">
-                Effectiveness of security collaboration across IT, HR, Legal, Operations, and other business units.
+
+            <!-- Security Awareness Culture -->
+            <div class="form-group">
+                <label>Security Awareness Culture Level (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="securityCulture" min="1" max="10" value="5"
+                        oninput="updateSliderValue('securityCulture', 'securityCultureValue')">
+                    <div>Current culture level: <span class="score-value" id="securityCultureValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Degree to which shared beliefs, routines, symbols, and power structures reinforce secure behavior.
+                </div>
             </div>
+
+            <!-- Company Policy Approachability -->
+            <div class="form-group">
+                <label>Company Policy Approachability & Accessibility (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="policyApproachability" min="1" max="10" value="5"
+                        oninput="updateSliderValue('policyApproachability', 'policyApproachabilityValue')">
+                    <div>Current approachability: <span class="score-value" id="policyApproachabilityValue">5</span>
+                    </div>
+                </div>
+                <div class="tool-description">
+                    How easy is it for employees to access, understand, and follow company security policies and
+                    procedures.
+                </div>
+            </div>
+
+            <!-- Communication Atmosphere -->
+            <div class="form-group">
+                <label>Communication Atmosphere & Transparency (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="communicationAtmosphere" min="1" max="10" value="5"
+                        oninput="updateSliderValue('communicationAtmosphere', 'communicationAtmosphereValue')">
+                    <div>Current atmosphere: <span class="score-value" id="communicationAtmosphereValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Level of open communication, transparency about security incidents, and psychological safety for
+                    reporting issues.
+                </div>
+            </div>
+
+            <!-- Cross-Department Collaboration -->
+            <div class="form-group">
+                <label>Cross-Department Security Collaboration (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="crossDepartmentCollaboration" min="1" max="10" value="5"
+                        oninput="updateSliderValue('crossDepartmentCollaboration', 'crossDepartmentCollaborationValue')">
+                    <div>Current collaboration: <span class="score-value"
+                            id="crossDepartmentCollaborationValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Effectiveness of security collaboration across IT, HR, Legal, Operations, and other business units.
+                </div>
+            </div>
+
+            <!-- Security Governance Structure -->
+            <div class="form-group">
+                <label>Security Governance Structure Maturity (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="securityGovernance" min="1" max="10" value="5"
+                        oninput="updateSliderValue('securityGovernance', 'securityGovernanceValue')">
+                    <div>Current governance maturity: <span class="score-value" id="securityGovernanceValue">5</span>
+                    </div>
+                </div>
+                <div class="tool-description">
+                    Clarity of security roles, responsibilities, decision-making authority, and governance processes.
+                </div>
+            </div>
+
+            <!-- Change Management Process -->
+            <div class="form-group">
+                <label>Security Change Management Process (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="changeManagement" min="1" max="10" value="5"
+                        oninput="updateSliderValue('changeManagement', 'changeManagementValue')">
+                    <div>Current change management: <span class="score-value" id="changeManagementValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Effectiveness of processes for implementing security changes, updates, and technology deployments.
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="nextTab()">Continue to AI Assessment</button>
         </div>
 
-        <!-- Security Governance Structure -->
-        <div class="form-group">
-            <label>Security Governance Structure Maturity (1-10 scale)</label>
-            <div class="slider-container">
-                <input type="range" class="slider" id="securityGovernance" min="1" max="10" value="5"
-                    oninput="updateSliderValue('securityGovernance', 'securityGovernanceValue')">
-                <div>Current governance maturity: <span class="score-value" id="securityGovernanceValue">5</span></div>
+        <!-- AI Assessment Tab -->
+        <div id="ai-assessment" class="tab-content">
+            <h2>AI Security Assessment</h2>
+            <p>Evaluate your organization's AI adoption and capabilities across security domains. This assessment will
+                calculate your AI maturity level and provide targeted recommendations for AI implementation.</p>
+
+            <!-- AI Detection and Analysis Capabilities -->
+            <div class="form-group">
+                <h3>1. AI Detection and Analysis Capabilities</h3>
+
+                <label>AI-Powered Threat Detection (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiThreatDetection" min="1" max="10" value="5"
+                        oninput="updateSliderValue('aiThreatDetection', 'aiThreatDetectionValue')">
+                    <div>Current capability: <span class="score-value" id="aiThreatDetectionValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Rate your organization's AI threat detection capabilities from signature-based only (1-2) to
+                    autonomous AI detection (9-10).
+                </div>
+
+                <label>AI Behavioral Analytics Sophistication (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiBehavioralAnalytics" min="1" max="10" value="5"
+                        oninput="updateSliderValue('aiBehavioralAnalytics', 'aiBehavioralAnalyticsValue')">
+                    <div>Current sophistication: <span class="score-value" id="aiBehavioralAnalyticsValue">5</span>
+                    </div>
+                </div>
+                <div class="tool-description">
+                    Evaluate AI behavioral analytics from basic profiling (3-4) to self-learning behavioral AI with
+                    predictive capabilities (9-10).
+                </div>
+
+                <label>AI Anomaly Detection Effectiveness (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiAnomalyDetection" min="1" max="10" value="5"
+                        oninput="updateSliderValue('aiAnomalyDetection', 'aiAnomalyDetectionValue')">
+                    <div>Current effectiveness: <span class="score-value" id="aiAnomalyDetectionValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Rate AI anomaly detection from basic thresholds (3-4) to autonomous detection with adaptive
+                    baselines (9-10).
+                </div>
+
+                <label>AI False Positive Reduction (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiFalsePositiveReduction" min="1" max="10" value="5"
+                        oninput="updateSliderValue('aiFalsePositiveReduction', 'aiFalsePositiveReductionValue')">
+                    <div>Current reduction capability: <span class="score-value"
+                            id="aiFalsePositiveReductionValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Evaluate AI's ability to reduce false positives from manual tuning (3-4) to self-optimizing systems
+                    (9-10).
+                </div>
             </div>
-            <div class="tool-description">
-                Clarity of security roles, responsibilities, decision-making authority, and governance processes.
+
+            <!-- AI Automation and Orchestration -->
+            <div class="form-group">
+                <h3>2. AI Automation and Orchestration</h3>
+
+                <label>AI-Driven Incident Response Automation (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiIncidentResponse" min="1" max="10" value="5"
+                        oninput="updateSliderValue('aiIncidentResponse', 'aiIncidentResponseValue')">
+                    <div>Current automation level: <span class="score-value" id="aiIncidentResponseValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Rate incident response automation from basic playbooks (3-4) to fully autonomous AI response (9-10).
+                </div>
+
+                <label>AI Security Orchestration Capabilities (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiOrchestration" min="1" max="10" value="5"
+                        oninput="updateSliderValue('aiOrchestration', 'aiOrchestrationValue')">
+                    <div>Current orchestration level: <span class="score-value" id="aiOrchestrationValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Evaluate AI orchestration from basic workflow automation (3-4) to autonomous AI-driven operations
+                    (9-10).
+                </div>
+
+                <label>AI Threat Hunting Sophistication (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiThreatHunting" min="1" max="10" value="5"
+                        oninput="updateSliderValue('aiThreatHunting', 'aiThreatHuntingValue')">
+                    <div>Current sophistication: <span class="score-value" id="aiThreatHuntingValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Rate threat hunting capabilities from simple automated searches (3-4) to autonomous AI
+                    investigations (9-10).
+                </div>
+
+                <label>AI Security Workflow Automation (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiWorkflowAutomation" min="1" max="10" value="5"
+                        oninput="updateSliderValue('aiWorkflowAutomation', 'aiWorkflowAutomationValue')">
+                    <div>Current automation level: <span class="score-value" id="aiWorkflowAutomationValue">5</span>
+                    </div>
+                </div>
+                <div class="tool-description">
+                    Evaluate security workflow automation from basic scripts (3-4) to intelligent autonomous workflows
+                    (9-10).
+                </div>
             </div>
+
+            <!-- AI Governance and Compliance -->
+            <div class="form-group">
+                <h3>3. AI Governance and Compliance</h3>
+
+                <label>AI Model Governance Framework (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiModelGovernance" min="1" max="10" value="5"
+                        oninput="updateSliderValue('aiModelGovernance', 'aiModelGovernanceValue')">
+                    <div>Current governance maturity: <span class="score-value" id="aiModelGovernanceValue">5</span>
+                    </div>
+                </div>
+                <div class="tool-description">
+                    Rate AI governance from basic policies (3-4) to comprehensive framework with continuous monitoring
+                    (9-10).
+                </div>
+
+                <label>AI Explainability and Transparency (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiExplainability" min="1" max="10" value="5"
+                        oninput="updateSliderValue('aiExplainability', 'aiExplainabilityValue')">
+                    <div>Current transparency level: <span class="score-value" id="aiExplainabilityValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Evaluate AI explainability from black box (1-2) to full transparency with human-interpretable
+                    outputs (9-10).
+                </div>
+
+                <label>AI Bias Detection and Mitigation (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiBiasMitigation" min="1" max="10" value="5"
+                        oninput="updateSliderValue('aiBiasMitigation', 'aiBiasMitigationValue')">
+                    <div>Current mitigation capability: <span class="score-value" id="aiBiasMitigationValue">5</span>
+                    </div>
+                </div>
+                <div class="tool-description">
+                    Rate bias handling from no testing (1-2) to continuous monitoring with automatic correction (9-10).
+                </div>
+
+                <label>AI Compliance Monitoring (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiComplianceMonitoring" min="1" max="10" value="5"
+                        oninput="updateSliderValue('aiComplianceMonitoring', 'aiComplianceMonitoringValue')">
+                    <div>Current monitoring level: <span class="score-value" id="aiComplianceMonitoringValue">5</span>
+                    </div>
+                </div>
+                <div class="tool-description">
+                    Evaluate AI compliance monitoring from manual checks (3-4) to automated continuous compliance
+                    (9-10).
+                </div>
+            </div>
+
+            <!-- AI Integration and Data Management -->
+            <div class="form-group">
+                <h3>4. AI Integration and Data Management</h3>
+
+                <label>AI Data Pipeline Management (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiDataPipeline" min="1" max="10" value="5"
+                        oninput="updateSliderValue('aiDataPipeline', 'aiDataPipelineValue')">
+                    <div>Current management maturity: <span class="score-value" id="aiDataPipelineValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Rate data pipeline capabilities from ad-hoc collection (1-2) to autonomous self-optimizing pipelines
+                    (9-10).
+                </div>
+
+                <label>AI Model Lifecycle Management (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiModelLifecycle" min="1" max="10" value="5"
+                        oninput="updateSliderValue('aiModelLifecycle', 'aiModelLifecycleValue')">
+                    <div>Current lifecycle maturity: <span class="score-value" id="aiModelLifecycleValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Evaluate model management from basic deployment (3-4) to autonomous self-updating models (9-10).
+                </div>
+
+                <label>Cross-Platform AI Integration (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiPlatformIntegration" min="1" max="10" value="5"
+                        oninput="updateSliderValue('aiPlatformIntegration', 'aiPlatformIntegrationValue')">
+                    <div>Current integration level: <span class="score-value" id="aiPlatformIntegrationValue">5</span>
+                    </div>
+                </div>
+                <div class="tool-description">
+                    Rate integration capabilities from siloed tools (1-2) to unified AI ecosystem (9-10).
+                </div>
+
+                <label>AI API and Data Flow Management (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiDataFlow" min="1" max="10" value="5"
+                        oninput="updateSliderValue('aiDataFlow', 'aiDataFlowValue')">
+                    <div>Current management capability: <span class="score-value" id="aiDataFlowValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Evaluate API and data flow management from manual configuration (3-4) to intelligent
+                    auto-configuration (9-10).
+                </div>
+            </div>
+
+            <!-- AI Maturity Assessment -->
+            <div class="form-group">
+                <h3>5. AI Maturity Assessment</h3>
+
+                <label>AI Strategy and Planning Maturity (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiStrategyPlanning" min="1" max="10" value="5"
+                        oninput="updateSliderValue('aiStrategyPlanning', 'aiStrategyPlanningValue')">
+                    <div>Current strategy maturity: <span class="score-value" id="aiStrategyPlanningValue">5</span>
+                    </div>
+                </div>
+                <div class="tool-description">
+                    Rate AI strategic planning from no strategy (1-2) to comprehensive AI roadmap with continuous
+                    evolution (9-10).
+                </div>
+
+                <label>AI Security Budget Allocation (% of security budget)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="aiBudgetAllocation" min="0" max="50" value="10"
+                        oninput="updateSliderValue('aiBudgetAllocation', 'aiBudgetAllocationValue')">
+                    <div>Current AI budget allocation: <span class="score-value" id="aiBudgetAllocationValue">10%</span>
+                    </div>
+                </div>
+                <div class="tool-description">
+                    Percentage of security budget allocated to AI technologies and initiatives.
+                </div>
+
+                <label>AI-Trained Security Professionals (Number per 1000 employees)</label>
+                <div class="form-row">
+                    <div>
+                        <input type="number" id="aiTrainedProfessionals" placeholder="Number of AI-trained staff"
+                            min="0">
+                    </div>
+                    <div>
+                        <input type="number" id="totalEmployeesAI" placeholder="Total employees" min="1">
+                    </div>
+                </div>
+                <div>AI-trained staff ratio: <span class="score-value" id="aiStaffRatioValue">--</span> per 1,000
+                    employees</div>
+                <div class="tool-description">
+                    Number of security professionals with AI/ML training relative to organization size.
+                </div>
+
+                <label>AI Implementation Timeline</label>
+                <select id="aiImplementationTimeline">
+                    <option value="">Select timeline</option>
+                    <option value="1">No AI implementation planned</option>
+                    <option value="3">Exploring AI options (12+ months)</option>
+                    <option value="5">Planning AI implementation (6-12 months)</option>
+                    <option value="7">Currently implementing AI (3-6 months)</option>
+                    <option value="9">Early AI deployment (0-3 months)</option>
+                    <option value="10">Mature AI program (18+ months)</option>
+                </select>
+                <div class="tool-description">
+                    Current AI implementation status and timeline for security AI adoption.
+                </div>
+
+                <label>AI Tool Evaluation Methodology</label>
+                <select id="aiToolEvaluation">
+                    <option value="">Select evaluation approach</option>
+                    <option value="2">Based on vendor claims only</option>
+                    <option value="4">Basic proof of concept testing</option>
+                    <option value="6">Comprehensive evaluation with benchmarks</option>
+                    <option value="8">Continuous monitoring and assessment</option>
+                    <option value="10">Advanced AI maturity benchmarking</option>
+                </select>
+                <div class="tool-description">
+                    Methodology used to evaluate and select AI security tools and solutions.
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="calculateResults()">Calculate Combined Assessment</button>
         </div>
 
-        <!-- Change Management Process -->
-        <div class="form-group">
-            <label>Security Change Management Process (1-10 scale)</label>
-            <div class="slider-container">
-                <input type="range" class="slider" id="changeManagement" min="1" max="10" value="5"
-                    oninput="updateSliderValue('changeManagement', 'changeManagementValue')">
-                <div>Current change management: <span class="score-value" id="changeManagementValue">5</span></div>
-            </div>
-            <div class="tool-description">
-                Effectiveness of processes for implementing security changes, updates, and technology deployments.
+        <!-- Results Tab -->
+        <div id="results" class="tab-content">
+            <h2>Assessment Results</h2>
+            <div id="resultsContent">
+                <div class="alert alert-info">
+                    Complete the comprehensive assessment to see your traditional security maturity level, AI adoption
+                    score, and combined maturity assessment with personalized recommendations.
+                </div>
             </div>
         </div>
-
-        <button class="btn btn-primary" onclick="calculateResults()">Calculate Threat Detection Level</button>
     </div>
 
-    <!-- Results Tab -->
-    <div id="results" class="tab-content">
-        <h2>Assessment Results</h2>
-        <div id="resultsContent">
-            <div class="alert alert-info">
-                Complete the comprehensive 15-factor assessment to see your threat detection maturity level and
-                personalized recommendations.
-            </div>
-        </div>
-    </div>
-    </div>
-
-    <script src="script.js">
-
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
