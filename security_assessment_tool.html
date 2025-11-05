@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Security Assessment Tool</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Enterprise Security Assessment Tool</h1>
+            <p>Comprehensive security maturity assessment across 15 organizational factors based on L0-L4 threat
+                detection framework</p>
+            <button id="darkModeToggle" class="btn btn-secondary" style="position: absolute; top: 20px; right: 20px;"
+                onclick="toggleDarkMode()">
+                🌙 Dark Mode
+            </button>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('company')">Company Info</button>
+            <button class="nav-tab" onclick="showTab('tools')">Security Tools</button>
+            <button class="nav-tab" onclick="showTab('assessment')">Assessment</button>
+            <button class="nav-tab" onclick="showTab('results')">Results</button>
+        </div>
+
+        <!-- Company Information Tab -->
+        <div id="company" class="tab-content active">
+            <h2>Company Information</h2>
+            <p>Please provide basic information about your organization to customize the assessment.</p>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="companyName">Company Name</label>
+                    <input type="text" id="companyName" placeholder="Enter company name">
+                </div>
+                <div class="form-group">
+                    <label for="companySize">Company Size (Employees)</label>
+                    <select id="companySize">
+                        <option value="">Select size range</option>
+                        <option value="1-50">1-50 employees</option>
+                        <option value="51-200">51-200 employees</option>
+                        <option value="201-1000">201-1,000 employees</option>
+                        <option value="1001-5000">1,001-5,000 employees</option>
+                        <option value="5001+">5,001+ employees</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="industry">Industry</label>
+                    <select id="industry">
+                        <option value="">Select industry</option>
+                        <option value="technology">Technology</option>
+                        <option value="financial">Financial Services</option>
+                        <option value="healthcare">Healthcare</option>
+                        <option value="manufacturing">Manufacturing</option>
+                        <option value="retail">Retail</option>
+                        <option value="government">Government</option>
+                        <option value="education">Education</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="regulatory">Regulatory Requirements</label>
+                    <select id="regulatory">
+                        <option value="">Select primary regulation</option>
+                        <option value="none">None</option>
+                        <option value="gdpr">GDPR</option>
+                        <option value="sox">SOX</option>
+                        <option value="hipaa">HIPAA</option>
+                        <option value="pci">PCI DSS</option>
+                        <option value="multiple">Multiple regulations</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Current Security Setup</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                        <input type="checkbox" id="hasSIEM">
+                        <label for="hasSIEM">SIEM (Security Information and Event Management)</label>
+                    </div>
+                    <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                        <input type="checkbox" id="hasEDR">
+                        <label for="hasEDR">EDR (Endpoint Detection and Response)</label>
+                    </div>
+                    <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                        <input type="checkbox" id="hasSOC">
+                        <label for="hasSOC">SOC (Security Operations Center)</label>
+                    </div>
+                    <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                        <input type="checkbox" id="hasIR">
+                        <label for="hasIR">Incident Response Team</label>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="nextTab()">Continue to Security Tools</button>
+        </div>
+
+        <!-- Security Tools Tab -->
+        <div id="tools" class="tab-content">
+            <h2>Security Tools Selection</h2>
+            <p>Select the security tools currently deployed in your organization. This helps us provide more targeted
+                recommendations.</p>
+
+            <!-- SIEM Tools -->
+            <div class="tool-category">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <span>SIEM (Security Information and Event Management)</span>
+                    <span>▼</span>
+                </div>
+                <div class="category-content">
+                    <div class="tool-description">
+                        Central log aggregation, correlation, and compliance reporting with UEBA and SOAR capabilities.
+                    </div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Splunk">
+                            <div>
+                                <strong>Splunk</strong>
+                                <div>Real-time monitoring with flexible query capabilities</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Exabeam Fusion">
+                            <div>
+                                <strong>Exabeam Fusion</strong>
+                                <div>Behavior-based detection with native SOAR and compliance reporting</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="IBM QRadar">
+                            <div>
+                                <strong>IBM QRadar SIEM</strong>
+                                <div>Modular architecture with multiple logging protocols</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Microsoft Sentinel">
+                            <div>
+                                <strong>Microsoft Sentinel</strong>
+                                <div>Cloud-native, pay-as-you-go with Microsoft ecosystem integration</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Rapid7 InsightIDR">
+                            <div>
+                                <strong>Rapid7 InsightIDR</strong>
+                                <div>Out-of-the-box detections with cloud-forward approach</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EDR Tools -->
+            <div class="tool-category">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <span>EDR (Endpoint Detection and Response)</span>
+                    <span>▼</span>
+                </div>
+                <div class="category-content">
+                    <div class="tool-description">
+                        Endpoint telemetry, detection, and response with process monitoring and rollback capabilities.
+                    </div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="CrowdStrike Falcon">
+                            <div>
+                                <strong>CrowdStrike Falcon</strong>
+                                <div>Cloud-native scale with strong telemetry and intelligence integration</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="SentinelOne">
+                            <div>
+                                <strong>SentinelOne Singularity</strong>
+                                <div>Autonomous mitigation and rollback with cross-platform support</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Microsoft Defender">
+                            <div>
+                                <strong>Microsoft Defender for Endpoint</strong>
+                                <div>Deep Microsoft 365/Entra integration and platform telemetry</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Palo Alto Cortex XDR">
+                            <div>
+                                <strong>Palo Alto Cortex XDR</strong>
+                                <div>Behavioral analytics with network/endpoint correlation</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Trellix">
+                            <div>
+                                <strong>Trellix Endpoint Security</strong>
+                                <div>Multi-engine detection with adaptive response capabilities</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- XDR Tools -->
+            <div class="tool-category">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <span>XDR (Extended Detection and Response)</span>
+                    <span>▼</span>
+                </div>
+                <div class="category-content">
+                    <div class="tool-description">
+                        Cross-domain detection and automated response across endpoint, identity, email, network, and
+                        cloud.
+                    </div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Microsoft Defender XDR">
+                            <div>
+                                <strong>Microsoft Defender XDR</strong>
+                                <div>Unified incidents across Microsoft 365 with automated investigation/playbooks</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Palo Alto Cortex XDR">
+                            <div>
+                                <strong>Palo Alto Cortex XDR</strong>
+                                <div>Behavioral analytics with cross-domain storyboarding</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Trend Micro Vision One">
+                            <div>
+                                <strong>Trend Micro Vision One</strong>
+                                <div>Correlated detections with guided response across domains</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Fortinet XDR">
+                            <div>
+                                <strong>Fortinet XDR</strong>
+                                <div>Fabric-wide correlation with automated isolation capabilities</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Firewalls -->
+            <div class="tool-category">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <span>NGFW & WAF (Next-Gen Firewalls & Web Application Firewalls)</span>
+                    <span>▼</span>
+                </div>
+                <div class="category-content">
+                    <div class="tool-description">
+                        Perimeter protection with application awareness, identity mapping, and intrusion prevention.
+                    </div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Palo Alto NGFW">
+                            <div>
+                                <strong>Palo Alto Networks NGFW</strong>
+                                <div>App-ID, Content-ID, WildFire integration with identity mapping</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Fortinet FortiGate">
+                            <div>
+                                <strong>Fortinet FortiGate</strong>
+                                <div>Deep packet inspection with native SD-WAN capabilities</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Cisco Secure Firewall">
+                            <div>
+                                <strong>Cisco Secure Firewall</strong>
+                                <div>Snort IPS, AMP, URL filtering with comprehensive integrations</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Check Point Quantum">
+                            <div>
+                                <strong>Check Point Quantum</strong>
+                                <div>SandBlast sandboxing with SandBlast Zero-Day protection</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Identity & Access Management -->
+            <div class="tool-category">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <span>IAM (Identity and Access Management)</span>
+                    <span>▼</span>
+                </div>
+                <div class="category-content">
+                    <div class="tool-description">
+                        Single sign-on, multi-factor authentication, and privileged access management.
+                    </div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Okta">
+                            <div>
+                                <strong>Okta Workforce Identity</strong>
+                                <div>SSO, MFA, lifecycle management with broad app catalog</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Microsoft Entra ID">
+                            <div>
+                                <strong>Microsoft Entra ID</strong>
+                                <div>Cloud IAM with risk-based access and Microsoft integration</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Ping Identity">
+                            <div>
+                                <strong>Ping Identity</strong>
+                                <div>SSO, MFA, federation with hybrid cloud integrations</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="CyberArk">
+                            <div>
+                                <strong>CyberArk Workforce Identity</strong>
+                                <div>PAM, password vaulting, session monitoring capabilities</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vulnerability Management -->
+            <div class="tool-category">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <span>Vulnerability Management</span>
+                    <span>▼</span>
+                </div>
+                <div class="category-content">
+                    <div class="tool-description">
+                        Asset discovery, scanning, risk-based prioritization, and remediation tracking.
+                    </div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Tenable">
+                            <div>
+                                <strong>Tenable (One/Nessus)</strong>
+                                <div>Broad coverage with VM + WAS and strong risk-based prioritization</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Qualys VMDR">
+                            <div>
+                                <strong>Qualys VMDR</strong>
+                                <div>VM + DAST with CI/CD hooks and asset discovery</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Rapid7 InsightVM">
+                            <div>
+                                <strong>Rapid7 InsightVM</strong>
+                                <div>VM + DAST with Metasploit linkage and risk scoring</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="SecPod SanerNow">
+                            <div>
+                                <strong>SecPod SanerNow</strong>
+                                <div>Continuous VM with curated checks and continuous scoring</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Security -->
+            <div class="tool-category">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <span>Email Security</span>
+                    <span>▼</span>
+                </div>
+                <div class="category-content">
+                    <div class="tool-description">
+                        Phishing, BEC, malware defense with attachment sandboxing and URL protection.
+                    </div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Proofpoint">
+                            <div>
+                                <strong>Proofpoint Email Protection</strong>
+                                <div>ML-driven filters with multi-layer phishing/BEC protection</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Mimecast">
+                            <div>
+                                <strong>Mimecast Email Security</strong>
+                                <div>URL defense with attachment sandboxing and impersonation detection</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Microsoft Defender for Office 365">
+                            <div>
+                                <strong>Microsoft Defender for Office 365</strong>
+                                <div>Safe Attachments, Safe Links with native Microsoft stack integration</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cloud Security -->
+            <div class="tool-category">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <span>Cloud Security (CSPM/CWPP/CASB)</span>
+                    <span>▼</span>
+                </div>
+                <div class="category-content">
+                    <div class="tool-description">
+                        Cloud security posture management, workload protection, and SaaS access governance.
+                    </div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="AWS Security Hub">
+                            <div>
+                                <strong>AWS Security Hub</strong>
+                                <div>AWS-centric posture management with partner integrations</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Lacework">
+                            <div>
+                                <strong>Lacework</strong>
+                                <div>Multi-cloud posture management with DevOps toolchain integration</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Prisma Cloud">
+                            <div>
+                                <strong>Prisma Cloud (CSPM)</strong>
+                                <div>Continuous compliance with automated remediation workflows</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Orca Security">
+                            <div>
+                                <strong>Orca Security</strong>
+                                <div>Agentless posture checks with cloud-native integrations</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Threat Intelligence -->
+            <div class="tool-category">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <span>Threat Intelligence Platforms (TIP)</span>
+                    <span>▼</span>
+                </div>
+                <div class="category-content">
+                    <div class="tool-description">
+                        Multi-source threat data aggregation with ATT&CK mapping and automated response.
+                    </div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Recorded Future">
+                            <div>
+                                <strong>Recorded Future</strong>
+                                <div>Technical and dark web intel with real-time scoring and ATT&CK mapping</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Mandiant">
+                            <div>
+                                <strong>Mandiant Threat Intelligence</strong>
+                                <div>First-hand incident intel with actor tracking and attribution</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="Anomali">
+                            <div>
+                                <strong>Anomali ThreatStream</strong>
+                                <div>Multi-source aggregation with ML scoring and automation</div>
+                            </div>
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="ThreatConnect">
+                            <div>
+                                <strong>ThreatConnect</strong>
+                                <div>Collaborative intelligence operations with 450+ tool integrations</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="nextTab()">Continue to Assessment</button>
+        </div>
+
+        <!-- Organizational Assessment Tab -->
+        <div id="assessment" class="tab-content">
+            <h2>Organizational Security Assessment</h2>
+            <p>Evaluate your organization's security maturity across 15 key organizational factors. This comprehensive
+                assessment will determine your L0-L4 threat detection level.</p>
+
+            <!-- IT Department Accessibility -->
+            <div class="form-group">
+                <label>IT Department Accessibility (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="itAccessibility" min="1" max="10" value="5"
+                        oninput="updateSliderValue('itAccessibility', 'itAccessibilityValue')">
+                    <div>Current score: <span class="score-value" id="itAccessibilityValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Measures availability, responsiveness, and reliability of IT services that underpin security
+                    monitoring and incident handling.
+                </div>
+            </div>
+
+            <!-- Security Budget -->
+            <div class="form-group">
+                <label>Security Budget Allocation (% of IT budget)</label>
+                <input type="range" class="slider" id="securityBudget" min="1" max="30" value="10"
+                    oninput="updateSliderValue('securityBudget', 'securityBudgetValue')">
+                <div>Current allocation: <span class="score-value" id="securityBudgetValue">10%</span></div>
+                <div class="tool-description">
+                    Percentage of total IT budget allocated to cybersecurity including people, tooling, and program
+                    costs.
+                </div>
+            </div>
+
+            <!-- Security Team Ratio -->
+            <div class="form-group">
+                <label>Security Team Size vs Company Size Ratio</label>
+                <div class="form-row">
+                    <div>
+                        <input type="number" id="securityStaffCount" placeholder="Number of security staff" min="1">
+                    </div>
+                    <div>
+                        <input type="number" id="totalEmployeeCount" placeholder="Total employees" min="1">
+                    </div>
+                </div>
+                <div>Security staff ratio: <span class="score-value" id="staffRatioValue">--</span> per 1,000 employees
+                </div>
+                <div class="tool-description">
+                    Ratio of security FTEs to total headcount, adjusted for regulatory complexity and coverage
+                    requirements.
+                </div>
+            </div>
+
+            <!-- Incident Response Maturity -->
+            <div class="form-group">
+                <label>Incident Response Maturity (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="irMaturity" min="1" max="10" value="5"
+                        oninput="updateSliderValue('irMaturity', 'irMaturityValue')">
+                    <div>Current maturity: <span class="score-value" id="irMaturityValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Captures planning, detection & analysis, response, communications, and recovery/learning dimensions.
+                </div>
+            </div>
+
+            <!-- Training Frequency -->
+            <div class="form-group">
+                <label>Employee Security Training Frequency</label>
+                <select id="trainingFrequency">
+                    <option value="">Select training frequency</option>
+                    <option value="1">Annual only</option>
+                    <option value="3">Twice per year</option>
+                    <option value="5">Quarterly</option>
+                    <option value="8">Monthly microlearning</option>
+                    <option value="10">Continuous/Adaptive</option>
+                </select>
+                <div class="tool-description">
+                    Cadence and effectiveness of security awareness and role-based training for all staff.
+                </div>
+            </div>
+
+            <!-- Management Support -->
+            <div class="form-group">
+                <label>Management Support for Security Initiatives (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="managementSupport" min="1" max="10" value="5"
+                        oninput="updateSliderValue('managementSupport', 'managementSupportValue')">
+                    <div>Current support level: <span class="score-value" id="managementSupportValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Degree of active executive sponsorship, decision-making authority, and resourcing for security
+                    priorities.
+                </div>
+            </div>
+
+            <!-- Compliance Complexity -->
+            <div class="form-group">
+                <label>Compliance Requirements Complexity (1-10 scale)</label>
+                <select id="complianceComplexity">
+                    <option value="">Select complexity level</option>
+                    <option value="2">No formal frameworks</option>
+                    <option value="4">Minimal frameworks</option>
+                    <option value="6">Limited frameworks with annual audits</option>
+                    <option value="8">Several frameworks with overlapping controls</option>
+                    <option value="10">Multi-framework, multi-jurisdiction with continuous monitoring</option>
+                </select>
+                <div class="tool-description">
+                    Breadth and intensity of applicable regulatory and contractual security requirements.
+                </div>
+            </div>
+
+            <!-- Remote Work Security -->
+            <div class="form-group">
+                <label>Remote Work Security Posture (1-10 scale)</label>
+                <div class="slider-container">
+                    <input type="range" class="slider" id="remoteSecurity" min="1" max="10" value="5"
+                        oninput="updateSliderValue('remoteSecurity', 'remoteSecurityValue')">
+                    <div>Current posture: <span class="score-value" id="remoteSecurityValue">5</span></div>
+                </div>
+                <div class="tool-description">
+                    Maturity of controls for remote and hybrid work including identity, device, network, and data
+                    safeguards.
+                </div>
+            </div>
+
+            <!-- TPRM -->
+            <div class="form-group">
+                <label>Third-Party Vendor Risk Management (TPRM) (1-10 scale)
+            </div>
+            <div class="slider-container">
+                <input type="range" class="slider" id="tprm" min="1" max="10" value="5"
+                    oninput="updateSliderValue('tprm', 'tprmValue')">
+                <div>Current TPRM maturity: <span class="score-value" id="tprmValue">5</span></div>
+            </div>
+            <div class="tool-description">
+                Governance and operational discipline for managing supplier cybersecurity risk across the lifecycle.
+            </div>
+        </div>
+
+        <!-- Security Awareness Culture -->
+        <div class="form-group">
+            <label>Security Awareness Culture Level (1-10 scale)</label>
+            <div class="slider-container">
+                <input type="range" class="slider" id="securityCulture" min="1" max="10" value="5"
+                    oninput="updateSliderValue('securityCulture', 'securityCultureValue')">
+                <div>Current culture level: <span class="score-value" id="securityCultureValue">5</span></div>
+            </div>
+            <div class="tool-description">
+                Degree to which shared beliefs, routines, symbols, and power structures reinforce secure behavior.
+            </div>
+        </div>
+
+        <!-- Company Policy Approachability -->
+        <div class="form-group">
+            <label>Company Policy Approachability & Accessibility (1-10 scale)</label>
+            <div class="slider-container">
+                <input type="range" class="slider" id="policyApproachability" min="1" max="10" value="5"
+                    oninput="updateSliderValue('policyApproachability', 'policyApproachabilityValue')">
+                <div>Current approachability: <span class="score-value" id="policyApproachabilityValue">5</span></div>
+            </div>
+            <div class="tool-description">
+                How easy is it for employees to access, understand, and follow company security policies and procedures.
+            </div>
+        </div>
+
+        <!-- Communication Atmosphere -->
+        <div class="form-group">
+            <label>Communication Atmosphere & Transparency (1-10 scale)</label>
+            <div class="slider-container">
+                <input type="range" class="slider" id="communicationAtmosphere" min="1" max="10" value="5"
+                    oninput="updateSliderValue('communicationAtmosphere', 'communicationAtmosphereValue')">
+                <div>Current atmosphere: <span class="score-value" id="communicationAtmosphereValue">5</span></div>
+            </div>
+            <div class="tool-description">
+                Level of open communication, transparency about security incidents, and psychological safety for
+                reporting issues.
+            </div>
+        </div>
+
+        <!-- Cross-Department Collaboration -->
+        <div class="form-group">
+            <label>Cross-Department Security Collaboration (1-10 scale)</label>
+            <div class="slider-container">
+                <input type="range" class="slider" id="crossDepartmentCollaboration" min="1" max="10" value="5"
+                    oninput="updateSliderValue('crossDepartmentCollaboration', 'crossDepartmentCollaborationValue')">
+                <div>Current collaboration: <span class="score-value" id="crossDepartmentCollaborationValue">5</span>
+                </div>
+            </div>
+            <div class="tool-description">
+                Effectiveness of security collaboration across IT, HR, Legal, Operations, and other business units.
+            </div>
+        </div>
+
+        <!-- Security Governance Structure -->
+        <div class="form-group">
+            <label>Security Governance Structure Maturity (1-10 scale)</label>
+            <div class="slider-container">
+                <input type="range" class="slider" id="securityGovernance" min="1" max="10" value="5"
+                    oninput="updateSliderValue('securityGovernance', 'securityGovernanceValue')">
+                <div>Current governance maturity: <span class="score-value" id="securityGovernanceValue">5</span></div>
+            </div>
+            <div class="tool-description">
+                Clarity of security roles, responsibilities, decision-making authority, and governance processes.
+            </div>
+        </div>
+
+        <!-- Change Management Process -->
+        <div class="form-group">
+            <label>Security Change Management Process (1-10 scale)</label>
+            <div class="slider-container">
+                <input type="range" class="slider" id="changeManagement" min="1" max="10" value="5"
+                    oninput="updateSliderValue('changeManagement', 'changeManagementValue')">
+                <div>Current change management: <span class="score-value" id="changeManagementValue">5</span></div>
+            </div>
+            <div class="tool-description">
+                Effectiveness of processes for implementing security changes, updates, and technology deployments.
+            </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="calculateResults()">Calculate Threat Detection Level</button>
+    </div>
+
+    <!-- Results Tab -->
+    <div id="results" class="tab-content">
+        <h2>Assessment Results</h2>
+        <div id="resultsContent">
+            <div class="alert alert-info">
+                Complete the comprehensive 15-factor assessment to see your threat detection maturity level and
+                personalized recommendations.
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="script.js">
+
+    </script>
+</body>
+
+</html>
